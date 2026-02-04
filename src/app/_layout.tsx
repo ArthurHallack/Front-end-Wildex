@@ -58,6 +58,13 @@ export default function RootLayout() {
             title: 'Ajustes',
           }}
         />
+        <Drawer.Screen
+          name="ref" 
+          options={{
+            drawerLabel: 'Configurações',
+            title: 'Ajustes',
+          }}
+        />
       </Drawer>
     </GestureHandlerRootView>
   );

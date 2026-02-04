@@ -7,26 +7,50 @@ import { Colors } from '@/../constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
+  // Pega o tema atual ou assume light se for nulo
+  const colorScheme = useColorScheme() ?? 'light';
+  
+  // Atalho para as cores do tema atual
+  const theme = Colors[colorScheme];
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <Drawer 
         screenOptions={{ 
-          drawerActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-          headerShown: true, // Isso faz o botão ☰ aparecer no topo
-          drawerType: 'front', // Garante que ele deslize por cima
+          // Cor do texto/ícone do item selecionado no menu
+          drawerActiveTintColor: theme.tint,
+          
+          // Cor do texto/ícone dos itens não selecionados
+          drawerInactiveTintColor: theme.icon, 
+
+          // Estilo da "gaveta" (o menu lateral em si)
+          drawerStyle: {
+            backgroundColor: theme.background,
+            width: 250,
+          },
+
+          // Estilo da barra superior (Header)
+          headerStyle: {
+            backgroundColor: theme.background,
+            // Adiciona uma borda sutil embaixo para não sumir no fundo
+            borderBottomWidth: 1,
+            borderBottomColor: colorScheme === 'dark' ? '#333' : '#eee',
+          },
+          
+          // Cor do título e do ícone de menu (☰)
+          headerTintColor: theme.text,
+          
+          headerShown: true,
+          drawerType: 'front',
         }}
       >
-        {/* O name "(tabs)" precisa ser exatamente o nome da sua pasta de abas */}
         <Drawer.Screen
           name="(tabs)" 
           options={{
             drawerLabel: 'Início',
-            title: 'Wildex Home',
+            title: 'Wildex',
           }}
         />
-        {/* Se você tiver o arquivo modal.tsx na mesma pasta raiz */}
         <Drawer.Screen
           name="modal" 
           options={{

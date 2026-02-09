@@ -1,8 +1,7 @@
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Drawer } from 'expo-router/drawer';
+import { CustomDrawer } from '@/components/ui/CustomDrawer';
 
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
 import { Colors } from '@/../constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 
@@ -15,7 +14,8 @@ export default function RootLayout() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <Drawer 
+      <Drawer
+        drawerContent={(props) => <CustomDrawer {...props} />}
         screenOptions={{ 
           // Cor do texto/ícone do item selecionado no menu
           drawerActiveTintColor: theme.tint,
@@ -44,27 +44,19 @@ export default function RootLayout() {
           drawerType: 'front',
         }}
       >
-        <Drawer.Screen
-          name="(tabs)" 
-          options={{
-            drawerLabel: 'Início',
-            title: 'Wildex',
-          }}
-        />
-        <Drawer.Screen
-          name="modal" 
-          options={{
-            drawerLabel: 'Configurações',
-            title: 'Ajustes',
-          }}
-        />
-        <Drawer.Screen
-          name="ref" 
-          options={{
-            drawerLabel: 'Configurações',
-            title: 'Ajustes',
-          }}
-        />
+          <Drawer.Screen
+            name="(tabs)"
+            options={{ 
+              title: 'Wildex',
+              drawerItemStyle: { display: 'none' } // 👈 esconde do menu
+            }}
+          />
+          <Drawer.Screen
+            name="Login"
+            options={{ 
+              drawerItemStyle: { display: 'none' } // 👈 esconde do menu
+            }}
+          />
       </Drawer>
     </GestureHandlerRootView>
   );
